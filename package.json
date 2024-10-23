@@ -1,0 +1,18 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "bc2024-4"
+  },
+  "author": "sonyadrach",
+  "license": "ISC",
+  "dependencies": {
+    "superagent": "^10.1.1"
+  }
+}
