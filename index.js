@@ -2,6 +2,7 @@ const http = require('http');
 const { Command } = require('commander');
 const fs = require('fs/promises');
 const path = require('path');
+const superagent = require('superagent'); // Для HTTP-запитів
 
 const program = new Command();
 
