@@ -28,8 +28,20 @@ const server = http.createServer(async (req, res) => {
         res.end(data);
       } catch (err) {
         if (err.code === 'ENOENT') {
-          res.writeHead(404, { 'Content-Type': 'text/plain' });
-          res.end('Not Found');
+            // Якщо файл не знайдено, запитуємо картинку з https://http.cat
+            try {
+              const response = await superagent.get(`https://http.cat/${httpCode}`);
+              const imageBuffer = response.body; // Отримуємо буфер з відповіді
+  
+              // Зберігаємо картинку у кеш
+              await fs.writeFile(filePath, imageBuffer);
+              res.writeHead(200, { 'Content-Type': 'image/jpeg' }); // Встановлюємо заголовок відповіді
+              res.end(imageBuffer); // Відправляємо картинку у відповіді
+            } catch (fetchErr) {
+              // Якщо запит завершився помилкою
+              res.writeHead(404, { 'Content-Type': 'text/plain' }); // Файл не знайдено
+              res.end('Not Found');
+            }
         } else {
           res.writeHead(500, { 'Content-Type': 'text/plain' });
           res.end('Internal Server Error');
